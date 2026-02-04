@@ -1,11 +1,17 @@
 import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
 // ================= CONFIGURAÇÕES =================
 app.set("view engine", "ejs");
-app.set("views", "./views");
-app.use(express.static("public"));
+app.set("views", path.join(__dirname, "../views"));
+
+app.use(express.static(path.join(__dirname, "../public")));
 
 // ================= GOOGLE SHEETS =================
 const SHEETS_ID = "1pQNS_DuruJkdYSspDufIb5bGa5ZpMKNPnxnrKVJVpwM";
@@ -15,18 +21,17 @@ const SHEETS_URL = `https://docs.google.com/spreadsheets/d/${SHEETS_ID}/gviz/tq?
 
 // ================= FUNÇÃO DE LEITURA =================
 async function getProducts() {
-    const response = await fetch(SHEETS_URL);
-    const text = await response.text();
-  
-    // 🔥 LIMPEZA COMPLETA do retorno do Google
-    const jsonString = text
-      .replace("/*O_o*/", "")
-      .replace("google.visualization.Query.setResponse(", "")
-      .replace(");", "");
-  
-    const data = JSON.parse(jsonString);
-  
-    return data.table.rows
+  const response = await fetch(SHEETS_URL);
+  const text = await response.text();
+
+  const jsonString = text
+    .replace("/*O_o*/", "")
+    .replace("google.visualization.Query.setResponse(", "")
+    .replace(");", "");
+
+  const data = JSON.parse(jsonString);
+
+  return data.table.rows
     .map(row => ({
       id: row.c[0]?.v ?? "",
       name: row.c[1]?.v ?? "",
@@ -37,17 +42,17 @@ async function getProducts() {
       active: row.c[6]?.v === true
     }))
     .filter(product => product.active);
-  }
-  
+}
+
 // ================= ROTAS =================
-app.get("/catalogo", async (req, res) => {
-    try {
-      const products = await getProducts();
-      res.render("catalogo", { products });
-    } catch (error) {
-      console.error("🔥 ERRO REAL:", error);
-      res.status(500).send(error.message);
-    }
-  });
+app.get("/", async (req, res) => {
+  try {
+    const products = await getProducts();
+    res.render("catalogo", { products });
+  } catch (error) {
+    console.error("🔥 ERRO REAL:", error);
+    res.status(500).send("Erro ao carregar catálogo");
+  }
+});
 
 export default app;
