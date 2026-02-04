@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Catálogo</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header></header>
+
+<section class="search-container">
+  <form class="form-search" onsubmit="return false;">
+    <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Pesquisar produtos" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><ion-icon name="search-circle-outline"></ion-icon></button>
+  </form>
+</section>
+
+<nav>
+  <ul>
+    <li><a href="#" data-filter="ALL">TODOS</a></li>
+    <li><a href="#" data-filter="TIPO 1">TIPO 1</a></li>
+    <li><a href="#" data-filter="TIPO 2">TIPO 2</a></li>
+    <li><a href="#" data-filter="TIPO 3">TIPO 3</a></li>
+    <li><a href="#" data-filter="TIPO 4">TIPO 4</a></li>
+  </ul>
+</nav>
+
+<main>
+<h1 class="title">Nosso Catálogo</h1>
+
+<div class="grid">
+  <% products.forEach(product => { %>
+    <div class="card"
+    data-name="<%= product.name %>"
+    data-image="<%= product.image %>"
+    data-description="<%= product.description %>"
+    data-price="<%= product.price.toFixed(2) %>"
+    data-category="<%= product.category %>"
+  >
+    <img src="<%= product.image %>" alt="<%= product.name %>">
+  
+    <div class="info">
+      <h3><%= product.name %></h3>
+  
+      <p class="price">
+        R$ <%= product.price.toFixed(2) %>
+      </p>
+  
+      <span class="category">
+        <%= product.category %>
+      </span>
+    </div>
+  </div>
+  <% }) %>
+
+  <div class="modal" id="productModal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+  
+      <div class="modal-body">
+        <img id="modalImage" src="" alt="">
+  
+        <div class="modal-info">
+          <h2 id="modalName"></h2>
+          <p id="modalDescription"></p>
+          <p class="price">R$ <span id="modalPrice"></span></p>
+  
+          <a
+            id="modalWhatsapp"
+            class="btn-whatsapp"
+            target="_blank"
+          >
+
+          <ion-icon name="logo-whatsapp"></ion-icon>
+            Falar no WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+</main>
+
+<div class="image-lightbox" id="imageLightbox">
+  <span class="close-lightbox">&times;</span>
+  <img id="lightboxImage" src="" alt="">
+</div>
+
+
+<script src="/modal.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script>
+  const imageLightbox = document.getElementById("imageLightbox");
+  const lightboxImage = document.getElementById("lightboxImage");
+  const closeLightbox = document.querySelector(".close-lightbox");
+
+  modalImage.addEventListener("click", () => {
+    lightboxImage.src = modalImage.src;
+    imageLightbox.style.display = "flex";
+  });
+
+  closeLightbox.addEventListener("click", () => {
+    imageLightbox.style.display = "none";
+  });
+
+  imageLightbox.addEventListener("click", (e) => {
+    if (e.target === imageLightbox) {
+      imageLightbox.style.display = "none";
+    }
+  });
+
+  const filterLinks = document.querySelectorAll("nav a");
+const cards = document.querySelectorAll(".card");
+
+filterLinks.forEach(link => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const filter = link.dataset.filter;
+
+    cards.forEach(card => {
+      const category = card.dataset.category;
+
+      if (filter === "ALL" || category === filter) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  });
+});
+
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("input", () => {
+  const search = searchInput.value.toLowerCase();
+
+  cards.forEach(card => {
+    const name = card.dataset.name.toLowerCase();
+    const description = card.dataset.description.toLowerCase();
+    const category = card.dataset.category.toLowerCase();
+
+    const match =
+      name.includes(search) ||
+      description.includes(search) ||
+      category.includes(search);
+
+    card.style.display = match ? "block" : "none";
+  });
+});
+
+</script>
+
+<%- include("partials/footer.ejs") %>
+</body>
+</html>

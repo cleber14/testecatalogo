@@ -1,0 +1,294 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  body {
+    background: #f6f6f6;
+  }
+  
+  header {
+    background-image: url("https://i.ibb.co/mCQMNVMw/SISTEMA-DE-CAT-LOGO.png");
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: center;
+    background-repeat: no-repeat;
+
+    width: 100%;
+    height: 300px; /* ou 100vh */
+  }
+  
+  main {
+    padding: 30px;
+  }
+
+  .search-container {
+    width: 100%;
+    height: 200px;
+    background: rgb(51, 51, 51);
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .form-search {
+    position: relative;
+    background-color: white;
+    border-radius: 40px;
+    width: 600px;
+    height: 70px;
+  
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+  }
+  
+  .form-search input {
+    flex: 1;
+    height: 100%;
+    padding: 0 20px;
+    border-radius: 40px;
+    outline: none;
+    border: none;
+    font-size: 16px;
+  }
+  
+  .form-search button {
+    background: #333;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    cursor: pointer;
+  }
+  
+  .form-search button ion-icon {
+    color: white;
+    font-size: 42px;
+  }
+
+  ul {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  nav li {
+    list-style-type: none;
+    padding: 20px;
+  }
+
+  nav li a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    transition: 0.5s;
+  }
+
+  nav  li  a:hover {
+    text-decoration: underline;
+    text-decoration-color: blue;
+  }
+
+  .title {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  
+  .card {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    transition: transform .3s;
+  }
+  
+  .card:hover {
+    transform: translateY(-6px);
+  }
+  
+  .card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+  }
+  
+  .info {
+    padding: 16px;
+  }
+  
+  .info h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  
+  .price {
+    color: #2ecc71;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  
+  .category {
+    font-size: 13px;
+    color: #777;
+  }
+  
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    word-break: break-all;
+    padding: 10px;
+    z-index: 1000;
+  }
+
+  .modal-info {
+    display: flex;
+    flex-direction: column;
+    max-height: 400px; /* controla o tamanho total */
+  }
+  
+  /* 👇 DESCRIÇÃO COM SCROLL */
+  #modalDescription {
+    max-height: 150px;
+    overflow-y: auto;
+    margin: 15px 0;
+    padding-right: 8px;
+    line-height: 1.4;
+  }
+  
+  /* Scroll mais bonito (opcional) */
+  #modalDescription::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  #modalDescription::-webkit-scrollbar-thumb {
+    background: #bbb;
+    border-radius: 10px;
+  }
+  
+  /* PREÇO */
+  .price {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  /* 👇 BOTÃO WHATSAPP */
+  .btn-whatsapp {
+    margin-top: 25px;
+    padding: 14px 20px;
+    background: #25d366;
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+  
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  
+    font-weight: 600;
+    transition: background 0.2s ease;
+  }
+  
+  .btn-whatsapp:hover {
+    background: #1ebe5d;
+  }
+  
+  .btn-whatsapp ion-icon {
+    font-size: 22px;
+  }
+  
+  .modal-content {
+    background: #fff;
+    border-radius: 12px;
+    max-width: 800px;
+    width: 90%;
+    padding: 20px;
+  }
+  
+  .modal-body {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .modal-body img {
+    width: 300px;
+    border-radius: 10px;
+  }
+  
+  .modal-info {
+    flex: 1;
+  }
+  
+  .close {
+    font-size: 24px;
+    cursor: pointer;
+    float: right;
+  }
+
+  /* imagem clicável */
+#modalImage {
+  cursor: zoom-in;
+  transition: transform 0.2s ease;
+}
+
+#modalImage:hover {
+  transform: scale(1.03);
+}
+
+/* LIGHTBOX */
+.image-lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.image-lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+}
+
+/* botão fechar */
+.close-lightbox {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+}
+
+footer {
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  bottom: 0;
+}
