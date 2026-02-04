@@ -103,11 +103,19 @@
     margin-bottom: 40px;
   }
   
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
   .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
+}
   
   .card {
     background: #fff;
@@ -291,4 +299,94 @@ footer {
   text-align: center;
   padding: 20px;
   bottom: 0;
+}
+
+@media (max-width: 768px) {
+
+  header {
+    height: 180px;
+    background-position: center;
+  }
+
+  main {
+    padding: 15px;
+  }
+
+  /* SEARCH */
+  .search-container {
+    height: auto;
+    padding: 20px 10px;
+  }
+
+  .form-search {
+    width: 100%;
+    height: 55px;
+  }
+
+  .form-search input {
+    font-size: 14px;
+    padding: 0 15px;
+  }
+
+  .form-search button {
+    width: 45px;
+    height: 45px;
+  }
+
+  /* NAV */
+  ul {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  nav li {
+    padding: 10px;
+  }
+
+  /* CARDS */
+  .card img {
+    height: 160px;
+  }
+
+  .info h3 {
+    font-size: 15px;
+  }
+
+  .price {
+    font-size: 16px;
+  }
+
+  /* MODAL */
+  .modal-content {
+    padding: 15px;
+  }
+
+  .modal-body {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .modal-body img {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .modal-info {
+    width: 100%;
+  }
+
+  #modalDescription {
+    max-height: 120px;
+  }
+
+  /* WHATSAPP */
+  .btn-whatsapp {
+    width: 100%;
+    justify-content: center;
+  }
+
+  footer {
+    font-size: 14px;
+    padding: 15px;
+  }
 }
